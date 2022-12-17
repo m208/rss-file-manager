@@ -1,3 +1,5 @@
+import { os, getHomeDir } from './libs/os.js';
+
 const commands = {
     'up' : temp,
     'cd' : temp,
@@ -8,7 +10,7 @@ const commands = {
     'cp' : temp,
     'mv' : temp,
     'rm' : temp,
-    'os' : temp,
+    'os' : os,
     'hash' : temp,
     'compress' : temp,
     'decompress' : temp,
@@ -23,7 +25,7 @@ let userName =
     ? process.argv[2].replace('--username=', '')
     : 'Anonymus';
 
-const homeDir = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
+const homeDir = getHomeDir();
 
 console.log(`Welcome to the File Manager, ${userName}!`);
 console.log(`You are currently in ${homeDir}`);
