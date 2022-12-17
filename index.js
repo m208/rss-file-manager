@@ -1,4 +1,22 @@
+const commands = {
+    'up' : temp,
+    'cd' : temp,
+    'ls' : temp,
+    'cat' : temp,
+    'add' : temp,
+    'rn' : temp,
+    'cp' : temp,
+    'mv' : temp,
+    'rm' : temp,
+    'os' : temp,
+    'hash' : temp,
+    'compress' : temp,
+    'decompress' : temp,
+}
 
+function temp(...args) {
+    console.log(args);
+}
 
 let userName = 
     (process.argv.length > 2 && process.argv[2].includes('--username='))
@@ -16,5 +34,13 @@ process.on('exit', () => {
 
 
 process.stdin.on('data', (data) => {
-    if (data.toString().trim() === '.exit') process.exit();
+    const input = data.toString().trim();
+    const command = input.split(' ')[0];
+
+    if (command === '.exit') process.exit();
+
+    if (Object.keys(commands).includes(command)){
+        const args = input.split(' ').slice(1);
+        commands[command](...args);
+    }
 })
