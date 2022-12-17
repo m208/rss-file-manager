@@ -1,9 +1,10 @@
 import { os, getHomeDir } from './libs/os.js';
+import { listFiles, setWorkingDir, goUpper } from './libs/nwd.js';
 
 const commands = {
-    'up' : temp,
-    'cd' : temp,
-    'ls' : temp,
+    'up' : goUpper,
+    'cd' : setWorkingDir,
+    'ls' : listFiles,
     'cat' : temp,
     'add' : temp,
     'rn' : temp,
@@ -16,19 +17,17 @@ const commands = {
     'decompress' : temp,
 }
 
-function temp(...args) {
-    console.log(args);
-}
-
 let userName = 
     (process.argv.length > 2 && process.argv[2].includes('--username='))
     ? process.argv[2].replace('--username=', '')
     : 'Anonymus';
 
-const homeDir = getHomeDir();
+export const store = {
+    workingDir: getHomeDir(),
+};
 
 console.log(`Welcome to the File Manager, ${userName}!`);
-console.log(`You are currently in ${homeDir}`);
+console.log(`You are currently in ${store.workingDir}`);
 
 process.on('exit', () => {
     console.log(`Thank you for using File Manager, ${userName}, goodbye!`);
@@ -42,7 +41,11 @@ process.stdin.on('data', (data) => {
     if (command === '.exit') process.exit();
 
     if (Object.keys(commands).includes(command)){
-        const args = input.split(' ').slice(1);
+        const args = input.split(' ').slice(1).filter(el => el !== '');
         commands[command](...args);
     }
 })
+
+function temp(...args) {
+    console.log(args);
+}
