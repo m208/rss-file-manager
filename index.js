@@ -40,19 +40,36 @@ export const store = {
 console.log(`Welcome to the File Manager, ${userName}!`);
 console.log(`You are currently in ${store.workingDir}`);
 
-process.on('exit', () => {
+const closeApp = () => {
     console.log(`Thank you for using File Manager, ${userName}, goodbye!`);
+    process.exit();
+}
+
+process.on('SIGINT', () => {
+    closeApp();
 });
 
+const parseArgs = (input) => {
+
+    const dquotes = input.match(/\".+?\"/g);
+    if (!dquotes) return input.split(' ').filter(el => el !== '');
+    if (dquotes.length >= 2) return dquotes.map(el=>el.replaceAll('"', ''));
+
+    const rest = input.replaceAll(dquotes[0], '').split(' ').filter(el => el !== '');
+
+    return (input.indexOf('"') === 0) 
+            ? [dquotes[0].replaceAll('"', ''), ...rest] 
+            : [...rest, dquotes[0].replaceAll('"', '')];
+}
 
 process.stdin.on('data', (data) => {
     const input = data.toString().trim();
     const command = input.split(' ')[0];
 
-    if (command === '.exit') process.exit();
+    if (command === '.exit') closeApp();
 
     if (Object.keys(commands).includes(command)){
-        const args = input.split(' ').slice(1).filter(el => el !== '');
+        const args = parseArgs(input.slice(command.length).trim());
         commands[command](...args);
     }
 })
