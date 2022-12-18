@@ -1,16 +1,24 @@
 import { os, getHomeDir } from './libs/os.js';
 import { listFiles, setWorkingDir, goUpper } from './libs/nwd.js';
+import { 
+    readFile, 
+    addFile, 
+    renameFile, 
+    copyFile, 
+    moveFile, 
+    removeFile 
+} from './libs/fs.js';
 
 const commands = {
     'up' : goUpper,
     'cd' : setWorkingDir,
     'ls' : listFiles,
-    'cat' : temp,
-    'add' : temp,
-    'rn' : temp,
-    'cp' : temp,
-    'mv' : temp,
-    'rm' : temp,
+    'cat' : readFile,
+    'add' : addFile,
+    'rn' : renameFile,
+    'cp' : copyFile,
+    'mv' : moveFile,
+    'rm' : removeFile,
     'os' : os,
     'hash' : temp,
     'compress' : temp,
