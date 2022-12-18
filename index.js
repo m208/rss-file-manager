@@ -1,6 +1,8 @@
 import { os, getHomeDir } from './libs/os.js';
 import { listFiles, setWorkingDir, goUpper } from './libs/nwd.js';
 import { calculateHash } from './libs/hash.js';
+import { compress } from './libs/zlib/compress.js';
+import { decompress } from './libs/zlib/decompress.js';
 import { 
     readFile, 
     addFile, 
@@ -22,8 +24,8 @@ const commands = {
     'rm' : removeFile,
     'os' : os,
     'hash' : calculateHash,
-    'compress' : temp,
-    'decompress' : temp,
+    'compress' : compress,
+    'decompress' : decompress,
 }
 
 let userName = 
@@ -54,7 +56,3 @@ process.stdin.on('data', (data) => {
         commands[command](...args);
     }
 })
-
-function temp(...args) {
-    console.log(args);
-}
