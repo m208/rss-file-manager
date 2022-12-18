@@ -1,5 +1,6 @@
 import { os, getHomeDir } from './libs/os.js';
 import { listFiles, setWorkingDir, goUpper } from './libs/nwd.js';
+import { calculateHash } from './libs/hash.js';
 import { 
     readFile, 
     addFile, 
@@ -20,7 +21,7 @@ const commands = {
     'mv' : moveFile,
     'rm' : removeFile,
     'os' : os,
-    'hash' : temp,
+    'hash' : calculateHash,
     'compress' : temp,
     'decompress' : temp,
 }
